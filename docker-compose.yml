@@ -1,0 +1,21 @@
+services:
+  cursor-proxy:
+    build: .
+    ports:
+      - "${CURSOR_BRIDGE_PORT:-8765}:8765"
+    environment:
+      - CURSOR_BRIDGE_HOST=0.0.0.0
+      - CURSOR_BRIDGE_PORT=8765
+      - CURSOR_BRIDGE_API_KEY=${CURSOR_BRIDGE_API_KEY:-}
+      - CURSOR_BRIDGE_DEFAULT_MODEL=${CURSOR_BRIDGE_DEFAULT_MODEL:-auto}
+      - CURSOR_BRIDGE_TIMEOUT_MS=${CURSOR_BRIDGE_TIMEOUT_MS:-300000}
+      - CURSOR_BRIDGE_CHAT_ONLY_WORKSPACE=${CURSOR_BRIDGE_CHAT_ONLY_WORKSPACE:-true}
+      - CURSOR_BRIDGE_VERBOSE=${CURSOR_BRIDGE_VERBOSE:-false}
+      - CURSOR_BRIDGE_STRICT_MODEL=${CURSOR_BRIDGE_STRICT_MODEL:-true}
+      - CURSOR_AGENT_BIN=${CURSOR_AGENT_BIN:-agent}
+    volumes:
+      - agent-bin:/usr/local/bin/agent:ro
+    restart: unless-stopped
+
+volumes:
+  agent-bin:
