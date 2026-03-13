@@ -1,0 +1,18 @@
+[package]
+name = "cursor-proxy-test"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+cursor-proxy-errors = { path = "../cursor-proxy-errors" }
+cursor-proxy-types = { path = "../cursor-proxy-types" }
+cursor-proxy-agent = { path = "../cursor-proxy-agent" }
+cursor-proxy-models = { path = "../cursor-proxy-models" }
+cursor-proxy-auth = { path = "../cursor-proxy-auth" }
+cursor-proxy-openai = { path = "../cursor-proxy-openai" }
+cursor-proxy-anthropic = { path = "../cursor-proxy-anthropic" }
+axum = { workspace = true }
+tokio = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+reqwest = { version = "0.12", features = ["json"] }

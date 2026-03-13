@@ -9,6 +9,7 @@ members = [
     "cursor-proxy-openai",
     "cursor-proxy-anthropic",
     "cursor-proxy-server",
+    "cursor-proxy-test",
 ]
 
 [workspace.dependencies]
