@@ -217,6 +217,46 @@ message = client.messages.create(
 print(message.content[0].text)
 ```
 
+### With Claude Code
+
+Claude Code uses the Anthropic API format natively. Set the `ANTHROPIC_BASE_URL` environment variable to point at the proxy, then run Claude Code as usual:
+
+```bash
+# Start the proxy (in one terminal)
+CURSOR_BRIDGE_API_KEY=my-secret-key cargo run -p cursor-proxy-server --release
+
+# Run Claude Code pointed at the proxy (in another terminal)
+ANTHROPIC_BASE_URL=http://localhost:8765 \
+ANTHROPIC_API_KEY=my-secret-key \
+claude
+```
+
+Claude Code will send all requests to `/v1/messages` on your proxy, which translates them and routes them through Cursor's `agent` CLI.
+
+If you want to lock a specific model rather than letting Claude Code negotiate:
+
+```bash
+ANTHROPIC_BASE_URL=http://localhost:8765 \
+ANTHROPIC_API_KEY=my-secret-key \
+claude --model claude-opus-4-6
+```
+
+You can also add these to your shell profile so Claude Code always uses the proxy:
+
+```bash
+# ~/.zshrc or ~/.bashrc
+export ANTHROPIC_BASE_URL=http://localhost:8765
+export ANTHROPIC_API_KEY=my-secret-key
+```
+
+If you are running the proxy with TLS enabled:
+
+```bash
+ANTHROPIC_BASE_URL=https://localhost:8765 \
+ANTHROPIC_API_KEY=my-secret-key \
+claude
+```
+
 ### Custom headers
 
 You can override the workspace directory per request using the `X-Cursor-Workspace` header:
