@@ -73,10 +73,7 @@ fn unknown_model_returns_none() {
 
 #[test]
 fn mapping_is_case_insensitive() {
-    assert_eq!(
-        resolve_to_cursor_model("Claude-Opus-4-6"),
-        Some("opus-4.6")
-    );
+    assert_eq!(resolve_to_cursor_model("Claude-Opus-4-6"), Some("opus-4.6"));
     assert_eq!(
         resolve_to_cursor_model("CLAUDE-SONNET-4-6"),
         Some("sonnet-4.6")
@@ -85,7 +82,10 @@ fn mapping_is_case_insensitive() {
 
 #[test]
 fn normalize_strips_provider_prefix() {
-    assert_eq!(normalize_model_id("anthropic/claude-opus-4-6"), "claude-opus-4-6");
+    assert_eq!(
+        normalize_model_id("anthropic/claude-opus-4-6"),
+        "claude-opus-4-6"
+    );
     assert_eq!(normalize_model_id("openai/gpt-4"), "gpt-4");
     assert_eq!(normalize_model_id("a/b/c"), "c");
 }

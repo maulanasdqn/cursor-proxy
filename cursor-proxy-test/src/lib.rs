@@ -46,26 +46,25 @@ pub fn build_app(config: Config) -> Router {
     let last_model: Arc<RwLock<Option<String>>> = Arc::new(RwLock::new(None));
     let model_cache = Arc::new(RwLock::new(None));
 
-    let chat_completions = Arc::new(
-        cursor_proxy_openai::application::ChatCompletions::new(
-            config.clone(),
-            last_model.clone(),
-        ),
-    );
-    let list_models = Arc::new(
-        cursor_proxy_openai::application::ListModels::new(config.clone(), model_cache),
-    );
-    let messages = Arc::new(
-        cursor_proxy_anthropic::application::Messages::new(config.clone(), last_model),
-    );
+    let chat_completions = Arc::new(cursor_proxy_openai::application::ChatCompletions::new(
+        config.clone(),
+        last_model.clone(),
+    ));
+    let list_models = Arc::new(cursor_proxy_openai::application::ListModels::new(
+        config.clone(),
+        model_cache,
+    ));
+    let messages = Arc::new(cursor_proxy_anthropic::application::Messages::new(
+        config.clone(),
+        last_model,
+    ));
 
     let openai_routes = cursor_proxy_openai::infrastructure::http::routes::routes(
         config.clone(),
         chat_completions,
         list_models,
     );
-    let anthropic_routes =
-        cursor_proxy_anthropic::infrastructure::http::routes::routes(messages);
+    let anthropic_routes = cursor_proxy_anthropic::infrastructure::http::routes::routes(messages);
 
     Router::new()
         .merge(openai_routes)

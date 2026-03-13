@@ -8,11 +8,7 @@ use serde_json::json;
 
 use cursor_proxy_types::Config;
 
-pub async fn auth(
-    config: axum::extract::State<Arc<Config>>,
-    req: Request,
-    next: Next,
-) -> Response {
+pub async fn auth(config: axum::extract::State<Arc<Config>>, req: Request, next: Next) -> Response {
     let api_key = match &config.api_key {
         Some(key) => key,
         None => return next.run(req).await,

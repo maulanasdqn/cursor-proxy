@@ -18,7 +18,12 @@ async fn missing_token_returns_401() {
     assert_eq!(resp.status(), 401);
 
     let body: serde_json::Value = resp.json().await.unwrap();
-    assert!(body["error"]["message"].as_str().unwrap().contains("API key"));
+    assert!(
+        body["error"]["message"]
+            .as_str()
+            .unwrap()
+            .contains("API key")
+    );
 }
 
 #[tokio::test]

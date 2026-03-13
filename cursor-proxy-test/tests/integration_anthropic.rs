@@ -76,10 +76,12 @@ async fn missing_max_tokens_returns_400() {
     assert_eq!(resp.status(), 400);
 
     let body: serde_json::Value = resp.json().await.unwrap();
-    assert!(body["error"]["message"]
-        .as_str()
-        .unwrap()
-        .contains("max_tokens"));
+    assert!(
+        body["error"]["message"]
+            .as_str()
+            .unwrap()
+            .contains("max_tokens")
+    );
 }
 
 #[tokio::test]
@@ -164,8 +166,14 @@ async fn streaming_event_sequence_is_correct() {
         .collect();
 
     assert!(!events.is_empty());
-    assert_eq!(events[0], "message_start", "First event must be message_start");
-    assert_eq!(events[1], "content_block_start", "Second event must be content_block_start");
+    assert_eq!(
+        events[0], "message_start",
+        "First event must be message_start"
+    );
+    assert_eq!(
+        events[1], "content_block_start",
+        "Second event must be content_block_start"
+    );
 
     let last_three = &events[events.len() - 3..];
     assert_eq!(last_three[0], "content_block_stop");
@@ -196,19 +204,21 @@ async fn streaming_deltas_contain_text() {
 
     let mut found_text_delta = false;
     for line in text.lines() {
-        if let Some(data) = line.strip_prefix("data: ") {
-            if let Ok(obj) = serde_json::from_str::<serde_json::Value>(data) {
-                if obj["type"] == "content_block_delta" {
-                    let delta_text = obj["delta"]["text"].as_str().unwrap_or("");
-                    if !delta_text.is_empty() {
-                        found_text_delta = true;
-                    }
-                }
+        if let Some(data) = line.strip_prefix("data: ")
+            && let Ok(obj) = serde_json::from_str::<serde_json::Value>(data)
+            && obj["type"] == "content_block_delta"
+        {
+            let delta_text = obj["delta"]["text"].as_str().unwrap_or("");
+            if !delta_text.is_empty() {
+                found_text_delta = true;
             }
         }
     }
 
-    assert!(found_text_delta, "Should have at least one non-empty text delta");
+    assert!(
+        found_text_delta,
+        "Should have at least one non-empty text delta"
+    );
 }
 
 #[tokio::test]

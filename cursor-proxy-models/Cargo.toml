@@ -5,3 +5,6 @@ edition = "2024"
 
 [dependencies]
 cursor-proxy-types = { path = "../cursor-proxy-types" }
+
+[lints]
+workspace = true

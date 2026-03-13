@@ -121,10 +121,10 @@ async fn streaming_contains_text_deltas() {
                 continue;
             }
             if let Ok(obj) = serde_json::from_str::<serde_json::Value>(data) {
-                if let Some(content) = obj["choices"][0]["delta"]["content"].as_str() {
-                    if !content.is_empty() {
-                        found_content = true;
-                    }
+                if let Some(content) = obj["choices"][0]["delta"]["content"].as_str()
+                    && !content.is_empty()
+                {
+                    found_content = true;
                 }
                 if obj["choices"][0]["finish_reason"] == "stop" {
                     found_stop = true;

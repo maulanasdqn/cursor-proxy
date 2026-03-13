@@ -22,26 +22,25 @@ async fn main() {
     let last_model: Arc<RwLock<Option<String>>> = Arc::new(RwLock::new(None));
     let model_cache = Arc::new(RwLock::new(None));
 
-    let chat_completions = Arc::new(
-        cursor_proxy_openai::application::ChatCompletions::new(
-            config.clone(),
-            last_model.clone(),
-        ),
-    );
-    let list_models = Arc::new(
-        cursor_proxy_openai::application::ListModels::new(config.clone(), model_cache),
-    );
-    let messages = Arc::new(
-        cursor_proxy_anthropic::application::Messages::new(config.clone(), last_model),
-    );
+    let chat_completions = Arc::new(cursor_proxy_openai::application::ChatCompletions::new(
+        config.clone(),
+        last_model.clone(),
+    ));
+    let list_models = Arc::new(cursor_proxy_openai::application::ListModels::new(
+        config.clone(),
+        model_cache,
+    ));
+    let messages = Arc::new(cursor_proxy_anthropic::application::Messages::new(
+        config.clone(),
+        last_model,
+    ));
 
     let openai_routes = cursor_proxy_openai::infrastructure::http::routes::routes(
         config.clone(),
         chat_completions,
         list_models,
     );
-    let anthropic_routes =
-        cursor_proxy_anthropic::infrastructure::http::routes::routes(messages);
+    let anthropic_routes = cursor_proxy_anthropic::infrastructure::http::routes::routes(messages);
 
     let app = Router::new()
         .merge(openai_routes)
@@ -59,10 +58,14 @@ async fn main() {
             let tls_config = axum_server::tls_rustls::RustlsConfig::from_pem_file(cert, key)
                 .await
                 .expect("Failed to load TLS config");
-            axum_server::bind_rustls(addr.parse().expect("Invalid bind address"), tls_config)
-                .serve(app.into_make_service())
-                .await
-                .expect("Server error");
+            axum_server::bind_rustls(
+                addr.parse::<std::net::SocketAddr>()
+                    .expect("Invalid bind address"),
+                tls_config,
+            )
+            .serve(app.into_make_service())
+            .await
+            .expect("Server error");
         }
         _ => {
             info!("Starting HTTP server on {addr}");

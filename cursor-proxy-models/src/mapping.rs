@@ -22,12 +22,36 @@ pub struct ModelAlias {
 }
 
 const ANTHROPIC_ALIASES: &[ModelAlias] = &[
-    ModelAlias { cursor_id: "opus-4.6", anthropic_id: "claude-opus-4-6", name: "Claude 4.6 Opus" },
-    ModelAlias { cursor_id: "sonnet-4.6", anthropic_id: "claude-sonnet-4-6", name: "Claude 4.6 Sonnet" },
-    ModelAlias { cursor_id: "sonnet-4.5", anthropic_id: "claude-sonnet-4-5-20250514", name: "Claude 4.5 Sonnet" },
-    ModelAlias { cursor_id: "opus-4.6-thinking", anthropic_id: "claude-opus-4-6-thinking", name: "Claude 4.6 Opus (Thinking)" },
-    ModelAlias { cursor_id: "sonnet-4.6-thinking", anthropic_id: "claude-sonnet-4-6-thinking", name: "Claude 4.6 Sonnet (Thinking)" },
-    ModelAlias { cursor_id: "sonnet-4.5-thinking", anthropic_id: "claude-sonnet-4-5-thinking", name: "Claude 4.5 Sonnet (Thinking)" },
+    ModelAlias {
+        cursor_id: "opus-4.6",
+        anthropic_id: "claude-opus-4-6",
+        name: "Claude 4.6 Opus",
+    },
+    ModelAlias {
+        cursor_id: "sonnet-4.6",
+        anthropic_id: "claude-sonnet-4-6",
+        name: "Claude 4.6 Sonnet",
+    },
+    ModelAlias {
+        cursor_id: "sonnet-4.5",
+        anthropic_id: "claude-sonnet-4-5-20250514",
+        name: "Claude 4.5 Sonnet",
+    },
+    ModelAlias {
+        cursor_id: "opus-4.6-thinking",
+        anthropic_id: "claude-opus-4-6-thinking",
+        name: "Claude 4.6 Opus (Thinking)",
+    },
+    ModelAlias {
+        cursor_id: "sonnet-4.6-thinking",
+        anthropic_id: "claude-sonnet-4-6-thinking",
+        name: "Claude 4.6 Sonnet (Thinking)",
+    },
+    ModelAlias {
+        cursor_id: "sonnet-4.5-thinking",
+        anthropic_id: "claude-sonnet-4-5-thinking",
+        name: "Claude 4.5 Sonnet (Thinking)",
+    },
 ];
 
 pub fn get_anthropic_aliases(available_ids: &[String]) -> Vec<&'static ModelAlias> {

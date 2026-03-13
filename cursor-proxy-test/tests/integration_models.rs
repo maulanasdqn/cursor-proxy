@@ -16,8 +16,14 @@ async fn list_models_returns_cursor_and_aliases() {
 
     let ids: Vec<&str> = data.iter().filter_map(|m| m["id"].as_str()).collect();
 
-    assert!(ids.contains(&"opus-4.6"), "Should contain cursor model opus-4.6");
-    assert!(ids.contains(&"sonnet-4.6"), "Should contain cursor model sonnet-4.6");
+    assert!(
+        ids.contains(&"opus-4.6"),
+        "Should contain cursor model opus-4.6"
+    );
+    assert!(
+        ids.contains(&"sonnet-4.6"),
+        "Should contain cursor model sonnet-4.6"
+    );
     assert!(
         ids.contains(&"claude-opus-4-6"),
         "Should contain anthropic alias claude-opus-4-6"

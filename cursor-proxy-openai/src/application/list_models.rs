@@ -29,10 +29,10 @@ impl ListModels {
     pub async fn execute(&self) -> Result<Vec<ModelEntry>, AppError> {
         {
             let cache = self.cache.read().await;
-            if let Some(c) = cache.as_ref() {
-                if c.at.elapsed() < std::time::Duration::from_secs(300) {
-                    return Ok(build_entries(&c.models));
-                }
+            if let Some(c) = cache.as_ref()
+                && c.at.elapsed() < std::time::Duration::from_secs(300)
+            {
+                return Ok(build_entries(&c.models));
             }
         }
 
@@ -77,7 +77,7 @@ fn parse_model_list(output: &str) -> Vec<CursorModel> {
             }
             let name = rest
                 .trim()
-                .trim_end_matches(|c: char| c == ')')
+                .trim_end_matches(')')
                 .rsplit_once('(')
                 .map(|(before, _)| before.trim())
                 .unwrap_or(rest.trim())

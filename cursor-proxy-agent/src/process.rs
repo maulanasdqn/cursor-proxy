@@ -135,21 +135,20 @@ pub fn run_stream(
 fn parse_stream_line(line: &str) -> Option<AgentStreamEvent> {
     let obj: Value = serde_json::from_str(line).ok()?;
 
-    if obj.get("type").and_then(|t| t.as_str()) == Some("assistant") {
-        if let Some(content) = obj
+    if obj.get("type").and_then(|t| t.as_str()) == Some("assistant")
+        && let Some(content) = obj
             .get("message")
             .and_then(|m| m.get("content"))
             .and_then(|c| c.as_array())
-        {
-            let text: String = content
-                .iter()
-                .filter(|p| p.get("type").and_then(|t| t.as_str()) == Some("text"))
-                .filter_map(|p| p.get("text").and_then(|t| t.as_str()))
-                .collect::<Vec<_>>()
-                .join("");
-            if !text.is_empty() {
-                return Some(AgentStreamEvent::Text(text));
-            }
+    {
+        let text: String = content
+            .iter()
+            .filter(|p| p.get("type").and_then(|t| t.as_str()) == Some("text"))
+            .filter_map(|p| p.get("text").and_then(|t| t.as_str()))
+            .collect::<Vec<_>>()
+            .join("");
+        if !text.is_empty() {
+            return Some(AgentStreamEvent::Text(text));
         }
     }
 

@@ -22,7 +22,9 @@ pub struct Config {
 impl Config {
     pub fn from_env() -> Self {
         Self {
-            api_key: env::var("CURSOR_BRIDGE_API_KEY").ok().filter(|s| !s.is_empty()),
+            api_key: env::var("CURSOR_BRIDGE_API_KEY")
+                .ok()
+                .filter(|s| !s.is_empty()),
             agent_bin: env::var("CURSOR_AGENT_BIN")
                 .or_else(|_| env::var("CURSOR_CLI_BIN"))
                 .or_else(|_| env::var("CURSOR_CLI_PATH"))
@@ -38,8 +40,12 @@ impl Config {
                 .ok()
                 .and_then(|s| s.parse().ok())
                 .unwrap_or(300_000),
-            tls_cert: env::var("CURSOR_BRIDGE_TLS_CERT").ok().filter(|s| !s.is_empty()),
-            tls_key: env::var("CURSOR_BRIDGE_TLS_KEY").ok().filter(|s| !s.is_empty()),
+            tls_cert: env::var("CURSOR_BRIDGE_TLS_CERT")
+                .ok()
+                .filter(|s| !s.is_empty()),
+            tls_key: env::var("CURSOR_BRIDGE_TLS_KEY")
+                .ok()
+                .filter(|s| !s.is_empty()),
             chat_only_workspace: env::var("CURSOR_BRIDGE_CHAT_ONLY_WORKSPACE")
                 .map(|s| s != "false" && s != "0")
                 .unwrap_or(true),
@@ -49,9 +55,15 @@ impl Config {
             strict_model: env::var("CURSOR_BRIDGE_STRICT_MODEL")
                 .map(|s| s != "false" && s != "0")
                 .unwrap_or(true),
-            sessions_log: env::var("CURSOR_BRIDGE_SESSIONS_LOG").ok().filter(|s| !s.is_empty()),
-            workspace: env::var("CURSOR_BRIDGE_WORKSPACE")
-                .unwrap_or_else(|_| env::current_dir().unwrap_or_default().to_string_lossy().into()),
+            sessions_log: env::var("CURSOR_BRIDGE_SESSIONS_LOG")
+                .ok()
+                .filter(|s| !s.is_empty()),
+            workspace: env::var("CURSOR_BRIDGE_WORKSPACE").unwrap_or_else(|_| {
+                env::current_dir()
+                    .unwrap_or_default()
+                    .to_string_lossy()
+                    .into()
+            }),
             approve_mcps: env::var("CURSOR_BRIDGE_APPROVE_MCPS")
                 .map(|s| s == "true" || s == "1")
                 .unwrap_or(false),

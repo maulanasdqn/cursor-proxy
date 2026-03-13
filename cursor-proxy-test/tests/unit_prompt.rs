@@ -15,7 +15,10 @@ fn system_then_user() {
         json!({"role": "user", "content": "hello"}),
     ];
     let result = build_from_openai(&messages);
-    assert_eq!(result, "System:\nYou are helpful.\n\nUser: hello\n\nAssistant:");
+    assert_eq!(
+        result,
+        "System:\nYou are helpful.\n\nUser: hello\n\nAssistant:"
+    );
 }
 
 #[test]
@@ -65,9 +68,7 @@ fn tool_role_handled() {
 
 #[test]
 fn function_role_handled() {
-    let messages = vec![
-        json!({"role": "function", "content": "function output"}),
-    ];
+    let messages = vec![json!({"role": "function", "content": "function output"})];
     let result = build_from_openai(&messages);
     assert!(result.contains("Tool: function output"));
 }

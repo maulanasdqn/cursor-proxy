@@ -7,3 +7,6 @@ edition = "2024"
 cursor-proxy-types = { path = "../cursor-proxy-types" }
 axum = { workspace = true }
 serde_json = { workspace = true }
+
+[lints]
+workspace = true

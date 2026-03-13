@@ -33,10 +33,18 @@ impl IntoResponse for AppError {
                 "cursor_cli_error",
                 format!("Agent process exited with code {code}: {stderr}"),
             ),
-            Self::Internal(msg) => (StatusCode::INTERNAL_SERVER_ERROR, "internal_error", msg.clone()),
+            Self::Internal(msg) => (
+                StatusCode::INTERNAL_SERVER_ERROR,
+                "internal_error",
+                msg.clone(),
+            ),
         };
 
-        (status, axum::Json(json!({ "error": { "message": message, "code": code } }))).into_response()
+        (
+            status,
+            axum::Json(json!({ "error": { "message": message, "code": code } })),
+        )
+            .into_response()
     }
 }
 
