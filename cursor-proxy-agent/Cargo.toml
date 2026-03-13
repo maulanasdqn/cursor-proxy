@@ -1,0 +1,14 @@
+[package]
+name = "cursor-proxy-agent"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+cursor-proxy-errors = { path = "../cursor-proxy-errors" }
+cursor-proxy-types = { path = "../cursor-proxy-types" }
+tokio = { workspace = true }
+serde_json = { workspace = true }
+futures = { workspace = true }
+async-stream = { workspace = true }
+tempfile = { workspace = true }
+tracing = { workspace = true }

@@ -1,0 +1,15 @@
+[package]
+name = "cursor-proxy-server"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+cursor-proxy-types = { path = "../cursor-proxy-types" }
+cursor-proxy-auth = { path = "../cursor-proxy-auth" }
+cursor-proxy-openai = { path = "../cursor-proxy-openai" }
+cursor-proxy-anthropic = { path = "../cursor-proxy-anthropic" }
+axum = { workspace = true }
+tokio = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+axum-server = { workspace = true }

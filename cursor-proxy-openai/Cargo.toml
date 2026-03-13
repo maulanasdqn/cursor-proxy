@@ -1,0 +1,19 @@
+[package]
+name = "cursor-proxy-openai"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+cursor-proxy-errors = { path = "../cursor-proxy-errors" }
+cursor-proxy-types = { path = "../cursor-proxy-types" }
+cursor-proxy-agent = { path = "../cursor-proxy-agent" }
+cursor-proxy-models = { path = "../cursor-proxy-models" }
+axum = { workspace = true }
+tokio = { workspace = true }
+tokio-stream = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+futures = { workspace = true }
+uuid = { workspace = true }
+chrono = { workspace = true }
+tracing = { workspace = true }

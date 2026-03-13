@@ -1,0 +1,27 @@
+[workspace]
+resolver = "3"
+members = [
+    "cursor-proxy-errors",
+    "cursor-proxy-types",
+    "cursor-proxy-agent",
+    "cursor-proxy-models",
+    "cursor-proxy-auth",
+    "cursor-proxy-openai",
+    "cursor-proxy-anthropic",
+    "cursor-proxy-server",
+]
+
+[workspace.dependencies]
+axum = "0.8"
+tokio = { version = "1", features = ["full"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+uuid = { version = "1", features = ["v4"] }
+chrono = "0.4"
+tempfile = "3"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+tokio-stream = "0.1"
+futures = "0.3"
+async-stream = "0.3"
+axum-server = { version = "0.7", features = ["tls-rustls"] }

@@ -1,0 +1,9 @@
+[package]
+name = "cursor-proxy-auth"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+cursor-proxy-types = { path = "../cursor-proxy-types" }
+axum = { workspace = true }
+serde_json = { workspace = true }
